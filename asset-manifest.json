@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/commit-graph-plotter/static/js/main.cb905c19.js",
+    "main.js": "/commit-graph-plotter/static/js/main.c4f84829.js",
     "index.html": "/commit-graph-plotter/index.html",
-    "main.cb905c19.js.map": "/commit-graph-plotter/static/js/main.cb905c19.js.map"
+    "main.c4f84829.js.map": "/commit-graph-plotter/static/js/main.c4f84829.js.map"
   },
   "entrypoints": [
-    "static/js/main.cb905c19.js"
+    "static/js/main.c4f84829.js"
   ]
 }
