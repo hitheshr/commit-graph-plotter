@@ -1,35 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { getCommits } from './api';
+import { getCommits, getBranches } from './api';
 
-// const CommitGraph = ({ username, repo }) => {
-//   const [data, setData] = useState([]);
-
-//   useEffect(() => {
-//     if (username && repo) {
-//       getCommits(username, repo)
-//         .then((response) => {
-//           const commitData = response.data.map(commit => ({
-//             name: commit.sha.substring(0, 7),
-//             commits: 1
-//           }));
-
-//           setData(commitData);
-//         });
-//     }
-//   }, [username, repo]);
 const CommitGraph = ({ username, repo, token }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     if (username && repo && token) {
-      getCommits(username, repo, token)
+      getBranches(username, repo, token)
         .then((response) => {
-          const commitData = response.data.map(commit => ({
-            name: commit.sha.substring(0, 7),
-            commits: 1
-          }));
+          const branches = response.data;
+          for (const branch of branches) {
+            getCommits(username, repo, branch.name, token)
+              .then((response) => {
+                const commitData = response.data.map(commit => ({
+                  name: commit.sha.substring(0, 7),
+                  commits: 1
+                }));
 
-          setData(commitData);
+                setData(prevData => [...prevData, ...commitData]);
+              });
+          }
         });
     }
   }, [username, repo, token]);
@@ -43,8 +33,8 @@ const CommitGraph = ({ username, repo, token }) => {
         </div>
       ))}
     </div>
-
   );
 };
+
 
 export default CommitGraph;
