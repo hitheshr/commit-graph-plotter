@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CommitGraph from './CommitGraph';
+import CommitContainer from './CommitContainer'; // Ensure this points to the correct location
 // import firebase from 'firebase/app';
 // import 'firebase/auth';
 import { auth } from './firebase';
@@ -11,11 +11,6 @@ const HomePage = () => {
   const [submittedUsername, setSubmittedUsername] = useState('');
   const [submittedRepo, setSubmittedRepo] = useState('');
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setSubmittedUsername(username);
-  //   setSubmittedRepo(repo);
-  // }
   const [token, setToken] = useState(null);
 
   const signInWithGithub = () => {
@@ -44,7 +39,7 @@ const HomePage = () => {
         <input value={repo} onChange={(e) => setRepo(e.target.value)} placeholder="GitHub repository" />
         <button type="submit">Sign in with GitHub and Submit</button>
       </form>
-      {token && <CommitGraph username={submittedUsername} repo={submittedRepo} token={token} />}
+      {token && <CommitContainer username={submittedUsername} repo={submittedRepo} token={token} />}
     </div>
   );
 };
