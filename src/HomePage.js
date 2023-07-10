@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import CommitContainer from './CommitContainer'; // Ensure this points to the correct location
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import CommitContainer from './CommitContainer';
 import { auth } from './firebase';
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 
 const HomePage = () => {
-  const [username, setUsername] = useState('');
-  const [repo, setRepo] = useState('');
+  const [username, setUsername] = useState('opencv'); // Set default username
+  const [repo, setRepo] = useState('opencv'); // Set default repo
   const [submittedUsername, setSubmittedUsername] = useState('');
   const [submittedRepo, setSubmittedRepo] = useState('');
 

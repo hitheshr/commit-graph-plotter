@@ -1,25 +1,17 @@
-import axios from 'axios';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-export const getUserRepos = (username) => {
-  return axios.get(`https://api.github.com/users/${username}/repos`);
-}
-
-// export const getCommits = (username, repo) => {
-//   return axios.get(`https://api.github.com/repos/${username}/${repo}/commits`);
-// }
-
-export const getBranches = (username, repo, token) => {
-  return axios.get(`https://api.github.com/repos/${username}/${repo}/branches`, {
+export const fetchGraphQL = (query, variables = {}, token) => {
+  const client = new ApolloClient({
+    uri: 'https://api.github.com/graphql',
     headers: {
       'Authorization': `Bearer ${token}`
-    }
+    },
+    cache: new InMemoryCache()
   });
-}
 
-export const getCommits = (username, repo, branch, token) => {
-  return axios.get(`https://api.github.com/repos/${username}/${repo}/commits?sha=${branch}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
+  return client.query({
+    query: gql`${query}`,
+    variables
+  })
+  .then(response => response.data);
 }
