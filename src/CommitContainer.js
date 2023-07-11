@@ -12,7 +12,7 @@ const CommitContainer = ({ username, repo, token }) => {
   }, [username, repo, token]);
 
   return (
-    <div className='commits-container' style={{ width: '100%', height: '800px' }}>
+    <div className='main-content-container' style={{ width: '100%', height: '800px' }}>
       
     </div>
   );

@@ -61,5 +61,5 @@ export async function sortCommits(branches, heads, repoOwner, repoName) {
     console.log("--COMMITS FOR THIS PAGE ARE--");
     console.log(commitsObject.slice(0, 10));
     await showCommits(commitsObject.slice(0, 10), branchNames, commits, heads, 1, repoOwner, repoName);
-    showLegend(heads);
+    // showLegend(heads);
 }

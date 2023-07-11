@@ -2,7 +2,7 @@ import { getLocalToken } from "./getLocalToken";
 import { getLocalUserName } from "./getLocalToken";
 
 export async function loadBranchesButton() {
-    var contentView = document.getElementsByClassName("commits-container")[0];
+    var contentView = document.getElementsByClassName("main-content-container")[0];
     // var branchSelectionHtml = chrome.runtime.getURL('html/branchSelection.html');
     var branchSelectionHtmlText = `
     <div class="file-navigation">

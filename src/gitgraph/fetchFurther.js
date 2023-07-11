@@ -165,5 +165,5 @@ export async function fetchFurther(commits, allCommits, heads, pageNo, branchNam
   pageNo += 1;
   var commitsToShow = (allCommits.slice(0, 10 * pageNo));
   await showCommits(commitsToShow, branchNames, allCommits, heads, pageNo, repoOwner, repoName);
-  showLegend(heads);
+  // showLegend(heads);
 }

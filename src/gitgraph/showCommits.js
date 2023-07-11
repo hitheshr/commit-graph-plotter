@@ -154,7 +154,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   // var repoOwner = presentUrl.split('/')[3];
   // var repoName = presentUrl.split('/')[4];
   [commits, allCommits] = await getCommitDetails(repoOwner, repoName, commits, allCommits);
-  var contentView = document.getElementsByClassName("commits-container")[0];
+  var contentView = document.getElementsByClassName("main-content-container")[0];
 
   var commitsContainerDummy = document.createElement("div");
 
@@ -394,9 +394,13 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   // Display the branches filter dropdown button with default value only (All branches)
   await loadBranchesButton();
   // setBranchOptions(branchNames, branchNames);
+
   // setBranchOptions(branchNames, null);
-  setBranchOptions(branchNames, null);
+  contentView.innerHTML = "";
   contentView.appendChild(commitsOutsideContainer);
+  // contentView.replaceChild(commitsOutsideContainer);
+
+ 
 
   addNextPageButton(commits, branchNames, allCommits, heads, pageNo, repoOwner, repoName);
 
