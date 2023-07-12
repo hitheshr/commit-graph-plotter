@@ -318,15 +318,15 @@ export async function drawGraph(commits, commitDict) {
   // DOM updates acts pseudo-asynchronously, due to delay in repainting DOM. 
   // So, a hack has to be done to make the flow synchronous.
   // Here we wait for next frame to be repainted, before executing further commands.
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      for (var commit of commits) {
-        let commitDotHidden = document.querySelectorAll('[circlesha="' + commit.oid + '"][class="commitDotHidden"]')[0];
-        commitDotHidden.addEventListener("mouseover", onHoveringCommit);
-        commitDotHidden.addEventListener("mouseout", onHoverRemove);
-      }
-    });
-  });
+  // requestAnimationFrame(() => {
+  //   requestAnimationFrame(() => {
+  //     for (var commit of commits) {
+  //       let commitDotHidden = document.querySelectorAll('[circlesha="' + commit.oid + '"][class="commitDotHidden"]')[0];
+  //       commitDotHidden.addEventListener("mouseover", onHoveringCommit);
+  //       commitDotHidden.addEventListener("mouseout", onHoverRemove);
+  //     }
+  //   });
+  // });
 }
 
 // Get the vertical and horizontal position (center)
