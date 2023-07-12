@@ -2,14 +2,14 @@
 async function drawCurve(container, startx, starty, endx, endy, color) {
   var firstLineEndY = starty + ((endy - starty - 40) / 2);
   var secondLineStartY = firstLineEndY + 40;
-  container.innerHTML += '<path d = "M ' + startx + ' ' + starty + ' L ' + startx + ' ' + firstLineEndY + ' C ' + startx + ' ' + (parseInt(firstLineEndY) + 20) + ' , ' + endx + ' ' + (parseInt(firstLineEndY) + 20) + ' , ' + endx + ' ' + (parseInt(firstLineEndY) + 40) + ' L ' + endx + ' ' + endy + '" stroke="' + color + '" stroke-width="1" fill = "#00000000"/>';
+  container.innerHTML += '<path d = "M ' + startx + ' ' + starty + ' L ' + startx + ' ' + firstLineEndY + ' C ' + startx + ' ' + (parseInt(firstLineEndY) + 20) + ' , ' + endx + ' ' + (parseInt(firstLineEndY) + 20) + ' , ' + endx + ' ' + (parseInt(firstLineEndY) + 40) + ' L ' + endx + ' ' + endy + '" stroke="' + color + '" stroke-width="2" fill = "#00000000"/>';
 }
 
 // Draws an indication that there are parent commits, but not
 // shown on this page, because the parents are too old.
 async function drawDottedLine(container, startx, starty, color) {
-  container.innerHTML += '<path d = "M ' + startx + ' ' + starty + ' L ' + startx + ' ' + (starty + 10) + '" stroke="' + color + '" stroke-width="1" fill = "#00000000"/>';
-  container.innerHTML += '<path d = "M ' + startx + ' ' + (starty + 10) + ' L ' + startx + ' ' + (starty + 30) + '" stroke="' + color + '" stroke-width="1" stroke-dasharray="2,2" fill = "#00000000"/>';
+  container.innerHTML += '<path d = "M ' + startx + ' ' + starty + ' L ' + startx + ' ' + (starty + 10) + '" stroke="' + color + '" stroke-width="2" fill = "#00000000"/>';
+  container.innerHTML += '<path d = "M ' + startx + ' ' + (starty + 10) + ' L ' + startx + ' ' + (starty + 30) + '" stroke="' + color + '" stroke-width="2" stroke-dasharray="2,2" fill = "#00000000"/>';
 }
 
 // Used to keep track of which commit is hovered presently (if any)
@@ -133,10 +133,10 @@ function drawCommit(commit) {
   var cx = commit.cx;
   var cy = commit.cy;
   if (commit.isHead) {
-    toAppend += '<circle class = "commitHeadDot" cx="' + cx + '" cy="' + cy + '" r="7" stroke="' + commit.color + '" fill = "#00000000" circlesha = "' + commit.oid + '"/>';
+    toAppend += '<circle class = "commitHeadDot" cx="' + cx + '" cy="' + cy + '" r="8" stroke="' + commit.color + '" fill = "#00000000" circlesha = "' + commit.oid + '"/>';
   }
-  toAppend += '<circle class = "commitDot" cx="' + cx + '" cy="' + cy + '" r="4" fill="' + commit.color + '" circlesha = "' + commit.oid + '"/>';
-  toAppend += '<circle class = "commitDotHidden" cx="' + cx + '" cy="' + cy + '" r="19" fill="#ffffff00" circlesha = "' + commit.oid + '"/>';
+  toAppend += '<circle class = "commitDot" cx="' + cx + '" cy="' + cy + '" r="5" fill="' + commit.color + '" circlesha = "' + commit.oid + '"/>';
+  toAppend += '<circle class = "commitDotHidden" cx="' + cx + '" cy="' + cy + '" r="20" fill="#ffffff00" circlesha = "' + commit.oid + '"/>';
   return (toAppend);
 }
 
@@ -267,7 +267,7 @@ export async function drawGraph(commits, commitDict) {
     // The purpose of this first set of circles is to easily query the position of the commit dot.
     commits[i].cx = 30 + (commitXIndex * 14);
     commits[i].cy = yPos;
-    commitsGraphContainer.innerHTML += '<circle cx="' + (30 + (commitXIndex * 14)) + '" cy="' + yPos + '" r="1" fill="' + commit.color + '" circlesha = "' + commit.oid + '"/>';
+    commitsGraphContainer.innerHTML += '<circle cx="' + (30 + (commitXIndex * 14)) + '" cy="' + yPos + '" r="2" fill="' + commit.color + '" circlesha = "' + commit.oid + '"/>';
     yPos += thisCommitItem.offsetHeight / 2;
   }
 
