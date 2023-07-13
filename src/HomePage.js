@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CommitContainer from './CommitContainer';
 import { auth } from './firebase';
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
@@ -9,7 +9,6 @@ const HomePage = () => {
   const [repo, setRepo] = useState('opencv'); // Set default repo
   const [submittedUsername, setSubmittedUsername] = useState('');
   const [submittedRepo, setSubmittedRepo] = useState('');
-
   const [token, setToken] = useState(null);
 
   const checkTokenValidity = async (token) => {
@@ -50,19 +49,14 @@ const HomePage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmittedUsername(username);
-    setSubmittedRepo(repo);
+  // Use useEffect hook to call signInWithGithub function when the page loads
+  useEffect(() => {
     signInWithGithub();
-  }
+  }, []);
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">See graph</button>
-      </form>
-      {token && <CommitContainer username={submittedUsername} repo={submittedRepo} token={token} />}
+      {token && <CommitContainer username={username} repo={repo} token={token} />}
     </div>
   );
 };

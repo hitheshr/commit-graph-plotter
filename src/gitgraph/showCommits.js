@@ -245,7 +245,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
       <div class="flex-auto min-width-0 js-details-container Details">
           <p class="mb-1">
               <a class="Link--primary text-bold js-navigation-open markdown-title" id="commitMessage" data-pjax="true"
-                  href="">Loading...</a>
+                  href="" target="_blank" rel="noopener noreferrer" >Loading...</a>
           </p>
           <div class="d-flex flex-items-center mt-1">
 
@@ -254,7 +254,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
                       <a class="avatar avatar-user" style="width:20px;height:20px;" data-skip-pjax="true"
                           data-test-selector="commits-avatar-stack-avatar-link" data-hovercard-type="user" id="hoverCard"
                           data-hovercard-url="" data-octo-click="hovercard-link-click"
-                          data-octo-dimensions="link_type:self" href="">
+                          data-octo-dimensions="link_type:self" href="" target="_blank" rel="noopener noreferrer" >
                           <img data-test-selector="commits-avatar-stack-avatar-image" width="20" height="20" alt=""
                               class=" avatar-user" id="avatarImage"
                               src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
@@ -333,13 +333,13 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
                   </clipboard-copy>
 
               </button>
-              <a href="" aria-label="View commit details" data-view-component="true"
+              <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item text-mono f6" id="commitLink"> .......
 
               </a>
           </div>
           <div data-view-component="true" class="BtnGroup">
-              <a href="" aria-label="Browse the repository at this point in the history" data-view-component="true"
+              <a href="" target="_blank" rel="noopener noreferrer" aria-label="Browse the repository at this point in the history" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item" id="commitTreeLink"> <svg
                       aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
                       data-view-component="true" class="octicon octicon-code">
@@ -360,29 +360,29 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
 
   for (var commit of commits) {
     var newCommitItem = commitItem.cloneNode(true);
-    newCommitItem.setAttribute("data-url", "/" + repoOwner + "/" + repoName + "/commits/" + commit.oid + "/commits_list_item");
+    newCommitItem.setAttribute("data-url", "https://github.com/" + repoOwner + "/" + repoName + "/commits/" + commit.oid + "/commits_list_item");
     newCommitItem.setAttribute("commitSha", commit.oid);
     var parents = []
     for (var parent of commit.parents) {
       parents.push(parent.node.oid.substring(0, 7));
     }
     newCommitItem.querySelector("#commitMessage").innerHTML = commit.messageHeadlineHTML;
-    newCommitItem.querySelector("#commitMessage").setAttribute("href", "/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
+    newCommitItem.querySelector("#commitMessage").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
     newCommitItem.querySelector("#avatarBody").setAttribute("aria-label", commit.authorLogin);
     newCommitItem.querySelector("#hoverCard").setAttribute("data-hovercard-url", "/users/" + commit.authorLogin + "/hovercard");
-    newCommitItem.querySelector("#hoverCard").setAttribute("href", "/" + commit.authorLogin);
+    newCommitItem.querySelector("#hoverCard").setAttribute("href", "https://github.com/" + commit.authorLogin);
     newCommitItem.querySelector("#avatarImage").setAttribute("alt", "@" + commit.authorLogin);
     newCommitItem.querySelector("#copyFullSHA").setAttribute("value", commit.oid);
-    newCommitItem.querySelector("#commitLink").setAttribute("href", "/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
-    newCommitItem.querySelector("#commitTreeLink").setAttribute("href", "/" + repoOwner + "/" + repoName + "/tree/" + commit.oid);
+    newCommitItem.querySelector("#commitLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
+    newCommitItem.querySelector("#commitTreeLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/tree/" + commit.oid);
     newCommitItem.querySelector("#commitLink").innerHTML = commit.oid.substring(0, 7);
-    newCommitItem.querySelector("#statusDetails").setAttribute("data-deferred-details-content-url", "/" + repoOwner + "/" + repoName + "/commit/" + commit.oid + "/status-details");
+    newCommitItem.querySelector("#statusDetails").setAttribute("data-deferred-details-content-url", "github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid + "/status-details");
     newCommitItem.querySelector("#viewAllCommits").innerHTML = commit.authorLogin;
     newCommitItem.querySelector("#relativeTime").innerText = relativeTime(commit.committedDate);
     if (commit.hasUserData) {
       newCommitItem.querySelector("#avatarImage").setAttribute("src", commit.authorAvatar + "&s=40");
       newCommitItem.querySelector("#viewAllCommits").setAttribute("title", "View all commits by " + commit.authorLogin);
-      newCommitItem.querySelector("#viewAllCommits").setAttribute("href", "/" + repoOwner + "/" + repoName + "/commits?author=" + commit.authorLogin);
+      newCommitItem.querySelector("#viewAllCommits").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commits?author=" + commit.authorLogin);
     }
     commitsContainerDummy.appendChild(newCommitItem);
   }
