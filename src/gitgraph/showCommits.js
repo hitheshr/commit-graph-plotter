@@ -304,34 +304,23 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
           </div>
       </div>
 
-      <div class="d-none d-md-block flex-shrink-0">
+      <div style="margin-left: auto;">
 
 
 
 
 
           <div data-view-component="true" class="BtnGroup">
-              <button aria-label="Copy the full SHA" type="button" data-view-component="true"
+              <button id="copyBtn" data-clipboard-text="3155d88b8b15d1f7ddb9030d174991d862dbaf38"
+                  aria-label="Copy the full SHA" type="button" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item px-0">
-                  <clipboard-copy aria-label="Copy the full SHA" value="3155d88b8b15d1f7ddb9030d174991d862dbaf38"
-                      data-view-component="true" class="px-3 py-2" tabindex="0" role="button" id="copyFullSHA">
-                      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
-                          data-view-component="true" class="octicon octicon-copy">
-                          <path fill-rule="evenodd"
-                              d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z">
-                          </path>
-                          <path fill-rule="evenodd"
-                              d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z">
-                          </path>
-                      </svg>
-                      <svg style="display: none;" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1"
-                          width="16" data-view-component="true" class="octicon octicon-check color-fg-success">
-                          <path fill-rule="evenodd"
-                              d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
-                          </path>
-                      </svg>
-                  </clipboard-copy>
-
+                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
+                      data-view-component="true" class="octicon octicon-copy">
+                      <path fill-rule="evenodd"
+                          d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
+                      <path fill-rule="evenodd"
+                          d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                  </svg>
               </button>
               <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item text-mono f6" id="commitLink"> .......
@@ -354,6 +343,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   </li>
   `;
 
+
   var tempDiv = document.createElement("div");
   tempDiv.innerHTML = commitItemHtml.trim();
   var commitItem = tempDiv.firstElementChild;
@@ -372,7 +362,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
     newCommitItem.querySelector("#hoverCard").setAttribute("data-hovercard-url", "/users/" + commit.authorLogin + "/hovercard");
     newCommitItem.querySelector("#hoverCard").setAttribute("href", "https://github.com/" + commit.authorLogin);
     newCommitItem.querySelector("#avatarImage").setAttribute("alt", "@" + commit.authorLogin);
-    newCommitItem.querySelector("#copyFullSHA").setAttribute("value", commit.oid);
+    // newCommitItem.querySelector("#copyFullSHA").setAttribute("value", commit.oid);
     newCommitItem.querySelector("#commitLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
     newCommitItem.querySelector("#commitTreeLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/tree/" + commit.oid);
     newCommitItem.querySelector("#commitLink").innerHTML = commit.oid.substring(0, 7);
@@ -384,6 +374,23 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
       newCommitItem.querySelector("#viewAllCommits").setAttribute("title", "View all commits by " + commit.authorLogin);
       newCommitItem.querySelector("#viewAllCommits").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commits?author=" + commit.authorLogin);
     }
+    var copyButton = newCommitItem.querySelector("#copyBtn");
+    copyButton.setAttribute("data-clipboard-text", commit.oid);
+    copyButton.removeAttribute("id");
+    // Add the event listener to the copy button
+    copyButton.addEventListener('click', function(event) {
+        // Use the Clipboard API to copy the commit.oid to the clipboard
+        var commitOid = event.currentTarget.getAttribute("data-clipboard-text");
+        navigator.clipboard.writeText(commitOid)
+        .then(() => {
+            // Success feedback here
+            console.log('Commit SHA copied to clipboard');
+        })
+        .catch(err => {
+            // Error handling here
+            console.error('Could not copy text: ', err);
+        });
+    });
     commitsContainerDummy.appendChild(newCommitItem);
   }
     
