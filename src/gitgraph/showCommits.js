@@ -181,7 +181,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
     </ol>
     <div class="paginate-container" data-pjax="" data-html-cleaner-suppress-children="">
         <div class="BtnGroup" data-test-selector="pagination">
-            <a rel="nofollow" class="btn btn-outline BtnGroup-item" aria-disabled="true" id="olderButton">
+            <a rel="nofollow" class="btn btn-primary BtnGroup-item" aria-disabled="true" id="olderButton">
                 Load More
             </a>
         </div>

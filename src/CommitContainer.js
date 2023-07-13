@@ -17,8 +17,7 @@ const CommitContainer = ({ username, repo, token }) => {
   }, [username, repo, token]);
 
   return (
-    <div className='main-content-container'>
-      
+    <div className='main-content-container' style={{ backgroundColor: 'black' }}>
     </div>
   );
 };
