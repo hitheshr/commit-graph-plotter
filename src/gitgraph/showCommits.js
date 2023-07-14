@@ -240,75 +240,10 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   // });
 
   var commitItemHtml = `
-  <li class="Box-row Box-row--focus-gray mt-0 d-flex js-commits-list-item js-navigation-item js-socket-channel js-updatable-content"
-data-url="">
-      <div class="flex-auto min-width-0 js-details-container Details">
-          <p class="mb-1">
-              <a class="Link--primary text-bold js-navigation-open markdown-title" id="commitMessage" data-pjax="true"
-                  href="" target="_blank" rel="noopener noreferrer" >Loading...</a>
-          </p>
-          <div class="d-flex flex-items-center mt-1">
-
-              <div class="AvatarStack flex-self-start  ">
-                  <div class="AvatarStack-body" id="avatarBody" aria-label="">
-                      <a class="avatar avatar-user" style="width:20px;height:20px;" data-skip-pjax="true"
-                          data-test-selector="commits-avatar-stack-avatar-link" data-hovercard-type="user" id="hoverCard"
-                          data-hovercard-url="" data-octo-click="hovercard-link-click"
-                          data-octo-dimensions="link_type:self" href="" target="_blank" rel="noopener noreferrer" >
-                          <img data-test-selector="commits-avatar-stack-avatar-image" width="20" height="20" alt=""
-                              class=" avatar-user" id="avatarImage"
-                              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
-                      </a>
-                  </div>
-              </div>
-
-              <div class="f6 color-fg-muted min-width-0">
-                  <a class="commit-author user-mention" title="View all commits by ..." id="viewAllCommits">Loading</a>
-
-                  committed
-                  <relativetime id="relativeTime" datetime="2022-07-26T17:08:20Z" class="no-wrap"
-                      title="26 Jul 2022, 22:38 GMT+5:30">...
-                      days ago</relativetime>
-
-              </div>
-              <div class="ml-1">
-
-
-                  <details
-                      class="commit-build-statuses details-overlay details-reset js-dropdown-details hx_dropdown-fullscreen"
-                      data-deferred-details-content-url="#" id="statusDetails">
-                      <summary class="color-fg-success">
-                          <svg aria-label="1 / 1 checks OK" role="img" height="16" viewBox="0 0 16 16" version="1.1"
-                              width="16" data-view-component="true" class="octicon octicon-check">
-                              <path fill-rule="evenodd"
-                                  d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z">
-                              </path>
-                          </svg>
-                      </summary>
-                      <div class="dropdown-menu status-checks-dropdown dropdown-menu-e overflow-hidden">
-                          <include-fragment class="m-4 d-flex flex-column flex-items-center">
-                              <svg style="box-sizing: content-box; color: var(--color-icon-primary);" width="32"
-                                  height="32" viewBox="0 0 16 16" fill="none" data-view-component="true"
-                                  class="anim-rotate">
-                                  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-opacity="0.25" stroke-width="2"
-                                      vector-effect="non-scaling-stroke"></circle>
-                                  <path d="M15 8a7.002 7.002 0 00-7-7" stroke="currentColor" stroke-width="2"
-                                      stroke-linecap="round" vector-effect="non-scaling-stroke"></path>
-                              </svg>
-                              <div class="color-fg-muted no-wrap">Loading status checks…</div>
-                          </include-fragment>
-                      </div>
-                  </details>
-
-              </div>
-          </div>
-          <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName" class="text-decoration-none text-body font-weight-normal"> 
-          </a>
-      </div>
-
-      <div style="margin-left: auto;">
-
-          <div data-view-component="true" class="BtnGroup">
+  <li style="padding: 10px; border: 1px solid #ccc; background-color: whitesmoke; color: #333; display: flex; font-size: 14px; font-weight: bold; margin-top: 0;">
+      <div >
+          <span>
+              <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" id="commitLink"> ....</a>
               <button id="copyBtn" data-clipboard-text="3155d88b8b15d1f7ddb9030d174991d862dbaf38"
                   aria-label="Copy the full SHA" type="button" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item px-0">
@@ -320,12 +255,6 @@ data-url="">
                           d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
                   </svg>
               </button>
-              <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" data-view-component="true"
-                  class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item text-mono f6" id="commitLink"> .......
-
-              </a>
-          </div>
-          <div data-view-component="true" class="BtnGroup">
               <a href="" target="_blank" rel="noopener noreferrer" aria-label="Browse the repository at this point in the history" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item" id="commitTreeLink"> <svg
                       aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
@@ -336,6 +265,34 @@ data-url="">
                   </svg>
 
               </a>
+              <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName"> </a>
+              <span id="commitMessage" target="_blank" rel="noopener noreferrer" >Loading...</span>
+              <img data-test-selector="commits-avatar-stack-avatar-image" width="20" height="20" alt=""
+                              class=" avatar-user" id="avatarImage"
+                              src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
+              <a class="commit-author user-mention" title="View all commits by ..." id="viewAllCommits">Loading</a>
+
+              committed
+              <relativetime id="relativeTime" datetime="2022-07-26T17:08:20Z" class="no-wrap"
+                  title="26 Jul 2022, 22:38 GMT+5:30">...
+                  days ago</relativetime>
+          </span>
+          <div class="d-flex flex-items-center mt-1">
+
+              <div class="AvatarStack flex-self-start  ">
+                  <div class="AvatarStack-body" id="avatarBody" aria-label="">
+                      <a class="avatar avatar-user" style="width:1px;height:1px;" data-skip-pjax="true"
+                          data-test-selector="commits-avatar-stack-avatar-link" data-hovercard-type="user" id="hoverCard"
+                          data-hovercard-url="" data-octo-click="hovercard-link-click"
+                          data-octo-dimensions="link_type:self" href="" target="_blank" rel="noopener noreferrer" >
+                      </a>
+                  </div>
+              </div>
+
+              <div class="f6 color-fg-muted min-width-0">
+                  
+
+              </div>
           </div>
       </div>
   </li>
@@ -374,7 +331,7 @@ data-url="">
       parents.push(parent.node.oid.substring(0, 7));
     }
     newCommitItem.querySelector("#commitMessage").innerHTML = commit.messageHeadlineHTML;
-    newCommitItem.querySelector("#commitMessage").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
+    // newCommitItem.querySelector("#commitMessage").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
     newCommitItem.querySelector("#avatarBody").setAttribute("aria-label", commit.authorLogin);
     newCommitItem.querySelector("#hoverCard").setAttribute("data-hovercard-url", "/users/" + commit.authorLogin + "/hovercard");
     newCommitItem.querySelector("#hoverCard").setAttribute("href", "https://github.com/" + commit.authorLogin);
@@ -383,7 +340,7 @@ data-url="">
     newCommitItem.querySelector("#commitLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
     newCommitItem.querySelector("#commitTreeLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/tree/" + commit.oid);
     newCommitItem.querySelector("#commitLink").innerHTML = commit.oid.substring(0, 7);
-    newCommitItem.querySelector("#statusDetails").setAttribute("data-deferred-details-content-url", "github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid + "/status-details");
+    // newCommitItem.querySelector("#statusDetails").setAttribute("data-deferred-details-content-url", "github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid + "/status-details");
     newCommitItem.querySelector("#viewAllCommits").innerHTML = commit.authorLogin;
     newCommitItem.querySelector("#relativeTime").innerText = relativeTime(commit.committedDate);
     if (commit.hasUserData) {
