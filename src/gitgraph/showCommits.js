@@ -241,7 +241,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
 
   var commitItemHtml = `
   <li class="Box-row Box-row--focus-gray mt-0 d-flex js-commits-list-item js-navigation-item js-socket-channel js-updatable-content"
-      data-url="">
+data-url="">
       <div class="flex-auto min-width-0 js-details-container Details">
           <p class="mb-1">
               <a class="Link--primary text-bold js-navigation-open markdown-title" id="commitMessage" data-pjax="true"
@@ -302,13 +302,11 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
 
               </div>
           </div>
+          <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName" class="text-decoration-none text-body font-weight-normal"> 
+          </a>
       </div>
 
       <div style="margin-left: auto;">
-
-
-
-
 
           <div data-view-component="true" class="BtnGroup">
               <button id="copyBtn" data-clipboard-text="3155d88b8b15d1f7ddb9030d174991d862dbaf38"
@@ -348,8 +346,27 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   tempDiv.innerHTML = commitItemHtml.trim();
   var commitItem = tempDiv.firstElementChild;
 
+  var headOids = new Set();
+  for (var head of heads) {
+    headOids.add(head.oid);
+  }
+
   for (var commit of commits) {
     var newCommitItem = commitItem.cloneNode(true);
+    if (headOids.has(commit.oid)) {
+      // get branch name
+      var branchName = "";
+      for (var head of heads) {
+        if (head.oid == commit.oid) {
+          branchName = head.name;
+          console.log("branchName: " + branchName);
+          newCommitItem.querySelector("#headBranchName").innerHTML = branchName;
+          newCommitItem.querySelector("#headBranchName").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/tree/" + branchName);
+          break;
+        }
+      }
+    }
+
     newCommitItem.setAttribute("data-url", "https://github.com/" + repoOwner + "/" + repoName + "/commits/" + commit.oid + "/commits_list_item");
     newCommitItem.setAttribute("commitSha", commit.oid);
     var parents = []
