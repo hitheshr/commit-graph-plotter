@@ -240,7 +240,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   // });
 
   var commitItemHtml = `
-  <li style="padding: 10px; border: 1px solid #ccc; background-color: whitesmoke; color: #333; display: flex; font-size: 14px; font-weight: bold; margin-top: 0;">
+  <li style="padding: 1px; border: 1px solid #ccc; background-color: whitesmoke; color: #333; display: flex; font-size: 14px; font-weight: bold; margin-top: 0;">
       <div >
           <span>
               <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" id="commitLink"> ....</a>
@@ -265,8 +265,8 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
                   </svg>
 
               </a>
-              <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName"> </a>
               <span id="commitMessage" target="_blank" rel="noopener noreferrer" >Loading...</span>
+              <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName"> </a>
               <img data-test-selector="commits-avatar-stack-avatar-image" width="20" height="20" alt=""
                               class=" avatar-user" id="avatarImage"
                               src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
@@ -277,23 +277,6 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
                   title="26 Jul 2022, 22:38 GMT+5:30">...
                   days ago</relativetime>
           </span>
-          <div class="d-flex flex-items-center mt-1">
-
-              <div class="AvatarStack flex-self-start  ">
-                  <div class="AvatarStack-body" id="avatarBody" aria-label="">
-                      <a class="avatar avatar-user" style="width:1px;height:1px;" data-skip-pjax="true"
-                          data-test-selector="commits-avatar-stack-avatar-link" data-hovercard-type="user" id="hoverCard"
-                          data-hovercard-url="" data-octo-click="hovercard-link-click"
-                          data-octo-dimensions="link_type:self" href="" target="_blank" rel="noopener noreferrer" >
-                      </a>
-                  </div>
-              </div>
-
-              <div class="f6 color-fg-muted min-width-0">
-                  
-
-              </div>
-          </div>
       </div>
   </li>
   `;
@@ -332,9 +315,9 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
     }
     newCommitItem.querySelector("#commitMessage").innerHTML = commit.messageHeadlineHTML;
     // newCommitItem.querySelector("#commitMessage").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
-    newCommitItem.querySelector("#avatarBody").setAttribute("aria-label", commit.authorLogin);
-    newCommitItem.querySelector("#hoverCard").setAttribute("data-hovercard-url", "/users/" + commit.authorLogin + "/hovercard");
-    newCommitItem.querySelector("#hoverCard").setAttribute("href", "https://github.com/" + commit.authorLogin);
+    // newCommitItem.querySelector("#avatarBody").setAttribute("aria-label", commit.authorLogin);
+    // newCommitItem.querySelector("#hoverCard").setAttribute("data-hovercard-url", "/users/" + commit.authorLogin + "/hovercard");
+    // newCommitItem.querySelector("#hoverCard").setAttribute("href", "https://github.com/" + commit.authorLogin);
     newCommitItem.querySelector("#avatarImage").setAttribute("alt", "@" + commit.authorLogin);
     // newCommitItem.querySelector("#copyFullSHA").setAttribute("value", commit.oid);
     newCommitItem.querySelector("#commitLink").setAttribute("href", "https://github.com/" + repoOwner + "/" + repoName + "/commit/" + commit.oid);
