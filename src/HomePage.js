@@ -4,12 +4,14 @@ import { auth } from './firebase';
 import { GithubAuthProvider, signInWithPopup } from "firebase/auth";
 import { getLocalToken } from './gitgraph/getLocalToken';
 
+
 const HomePage = () => {
-  const [username, setUsername] = useState('opencv'); // Set default username
-  const [repo, setRepo] = useState('opencv'); // Set default repo
-  const [submittedUsername, setSubmittedUsername] = useState('');
-  const [submittedRepo, setSubmittedRepo] = useState('');
+  const [username, setUsername] = useState(null); // Set default username
+  const [repo, setRepo] = useState(null); // Set default repo
   const [token, setToken] = useState(null);
+
+  const [url, setUrl] = useState(''); // For storing the URL input by user
+  
 
   const checkTokenValidity = async (token) => {
     try {
@@ -49,14 +51,56 @@ const HomePage = () => {
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    window.location.href = `/?url=${url}`; // Redirects the page to '/?url=<entered url>'
+  };
+
   // Use useEffect hook to call signInWithGithub function when the page loads
   useEffect(() => {
-    signInWithGithub();
+    var currentUrl = window.location.href;
+    var url = new URL(currentUrl);
+    var _username = "";
+    var _repo = "";
+    try {
+      var queryParamUrl = new URLSearchParams(url.search).get("url");
+      var queryUrl = new URL(queryParamUrl);
+      _username = queryUrl.pathname.split('/')[1];
+      _repo = queryUrl.pathname.split('/')[2];
+      console.log(_username, _repo);
+    } catch(e) {
+      console.error(e);
+    }
+    if (_username && _repo) {
+      setUsername(_username);
+      setRepo(_repo);
+      signInWithGithub();
+    }
+    
+    
   }, []);
+
+  // Show a form when no username is provided
+  if (!username) {
+    return (
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input 
+            type="text" 
+            value={url} 
+            onChange={e => setUrl(e.target.value)} 
+            placeholder="Enter a github URL" 
+            required 
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div>
-      {token && <CommitContainer username={username} repo={repo} token={token} />}
+      {username && <CommitContainer username={username} repo={repo} token={token} />}
     </div>
   );
 };
