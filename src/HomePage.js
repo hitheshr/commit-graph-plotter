@@ -123,6 +123,15 @@ const HomePage = () => {
 
   return (
     <div>
+      <div className="text-center">
+        {username && repo && 
+          <h1>
+            <a href={`https://github.com/${username}/${repo}`} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-dark">
+              {username}/{repo}
+            </a>
+          </h1>
+        }
+      </div>
       {username && <CommitContainer username={username} repo={repo} token={token} />}
     </div>
   );
