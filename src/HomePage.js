@@ -11,7 +11,8 @@ const HomePage = () => {
   const [token, setToken] = useState(null);
 
   const [url, setUrl] = useState(''); // For storing the URL input by user
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // Add a new state variable for authentication status
+
 
   const checkTokenValidity = async (token) => {
     try {
@@ -42,18 +43,21 @@ const HomePage = () => {
       signInWithPopup(auth, provider).then((result) => {
         console.log(result);
         setToken(result._tokenResponse.oauthAccessToken);
+        setIsAuthenticated(true);
       }).catch((error) => {
         console.error(error);
         // handle error
+        setIsAuthenticated(false);
       });
-    }else{
+    } else {
       setToken(localToken);
+      setIsAuthenticated(true);
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.location.href = `/?url=${url}`; // Redirects the page to '/?url=<entered url>'
+    window.location.href = `/commit-graph-plotter/?url=${url}`; // Redirects the page to '/?url=<entered url>'
   };
 
   // Use useEffect hook to call signInWithGithub function when the page loads
@@ -71,10 +75,23 @@ const HomePage = () => {
     } catch(e) {
       console.error(e);
     }
+
+    const checkAuthentication = async () => {
+      var localToken = getLocalToken();
+      const isValidToken = await checkTokenValidity(localToken);
+
+      if (isValidToken) {
+        setToken(localToken);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+
     if (_username && _repo) {
       setUsername(_username);
       setRepo(_repo);
-      signInWithGithub();
+      checkAuthentication();
     }
     
     
@@ -95,6 +112,12 @@ const HomePage = () => {
           <button type="submit">Submit</button>
         </form>
       </div>
+    );
+  }
+
+  if (isAuthenticated === false) {
+    return (
+      <button onClick={signInWithGithub}>Authenticate with Github</button>
     );
   }
 
