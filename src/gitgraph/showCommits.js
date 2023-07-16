@@ -156,7 +156,8 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   [commits, allCommits] = await getCommitDetails(repoOwner, repoName, commits, allCommits);
   var contentView = document.getElementsByClassName("main-content-container")[0];
 
-  var commitsContainerDummy = document.createElement("div");
+  var commitsContainerDummy = document.createElement("ul");
+  commitsContainerDummy.setAttribute("class", "list-group")
 
   var commitsOutsideContainer;
   var commitsContainer;
@@ -168,8 +169,8 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   [commits, commitDict] = assignColors(commits, heads);
 
   var commitsContainerHtml = `
-  <div class="" id="commits-outside-container">
-    <ol class="mt-3 list-style-none Box Box--condensed ml-n6 ml-sm-0 mb-5 position-relative" id="commitsOl">
+  <div class="" style="padding: 5px" id="commits-outside-container">
+    <ol class=" position-relative" id="commitsOl">
         <div style="width:100%">
             <div style="float: left;">
                 <svg width="100" id="graphSvg" style="height: 500; display: block; transform: scale(-1,1)">
@@ -180,8 +181,8 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
         </div>
     </ol>
     <div class="paginate-container" data-pjax="" data-html-cleaner-suppress-children="">
-        <div class="BtnGroup" data-test-selector="pagination">
-            <a rel="nofollow" class="btn btn-primary BtnGroup-item" aria-disabled="true" id="olderButton">
+        <div class="BtnGroup" style="display: flex; flex:1" data-test-selector="pagination">
+            <a rel="nofollow" class="btn btn-primary" style="flex: 1" aria-disabled="true" id="olderButton">
                 Load More
             </a>
         </div>
@@ -238,35 +239,28 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
   //     commitsContainerDummy.appendChild(newCommitItem);
   //   }
   // });
-
+//style="padding: 1px; border: 1px solid #ccc; background-color: whitesmoke; color: #333; display: flex; font-size: 14px; font-weight: bold; margin-top: 0;"
   var commitItemHtml = `
-  <li style="padding: 1px; border: 1px solid #ccc; background-color: whitesmoke; color: #333; display: flex; font-size: 14px; font-weight: bold; margin-top: 0;">
+  <li class="list-group-item" style="padding: 1px;font-size: 14px" >
       <div >
           <span>
-              <a href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" id="commitLink"> ....</a>
+              <a class="btn btn-outline-warning" href="" target="_blank" rel="noopener noreferrer" aria-label="View commit details" id="commitLink"> ....</a>
               <button id="copyBtn" data-clipboard-text="3155d88b8b15d1f7ddb9030d174991d862dbaf38"
                   aria-label="Copy the full SHA" type="button" data-view-component="true"
                   class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item px-0">
-                  <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
-                      data-view-component="true" class="octicon octicon-copy">
-                      <path fill-rule="evenodd"
-                          d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path>
-                      <path fill-rule="evenodd"
-                          d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                   </svg>
               </button>
               <a href="" target="_blank" rel="noopener noreferrer" aria-label="Browse the repository at this point in the history" data-view-component="true"
-                  class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item" id="commitTreeLink"> <svg
-                      aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16"
-                      data-view-component="true" class="octicon octicon-code">
-                      <path fill-rule="evenodd"
-                          d="M4.72 3.22a.75.75 0 011.06 1.06L2.06 8l3.72 3.72a.75.75 0 11-1.06 1.06L.47 8.53a.75.75 0 010-1.06l4.25-4.25zm6.56 0a.75.75 0 10-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 101.06 1.06l4.25-4.25a.75.75 0 000-1.06l-4.25-4.25z">
-                      </path>
+                  class="tooltipped tooltipped-sw btn-outline btn BtnGroup-item" id="commitTreeLink"> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
+                    <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
                   </svg>
-
               </a>
-              <span id="commitMessage" target="_blank" rel="noopener noreferrer" >Loading...</span>
-              <a href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName"> </a>
+              <spani id="commitMessage" target="_blank" rel="noopener noreferrer" >Loading...</span>
+              <a class="btn btn-outline-info" style="padding: 1px" href="" target="_blank" rel="noopener noreferrer" aria-label="branch details" id="headBranchName"></a>
               <img data-test-selector="commits-avatar-stack-avatar-image" width="20" height="20" alt=""
                               class=" avatar-user" id="avatarImage"
                               src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=">
