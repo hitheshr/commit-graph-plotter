@@ -360,7 +360,7 @@ export async function showCommits(commits, branchNames, allCommits, heads, pageN
 
  
 
-  addNextPageButton(commits, branchNames, allCommits, heads, pageNo, repoOwner, repoName);
+  addNextPageButton(commits, branchNames, allCommits, heads, pageNo, repoOwner, repoName, commitDict, commitsContainer);
 
   drawGraph(commits, commitDict);
 
@@ -398,14 +398,24 @@ function relativeTime(date) {
   return (output);
 }
 
-function addNextPageButton(commits, branchNames, allCommits, heads, pageNo, repoOwner, repoName) {
+function addNextPageButton(commits, branchNames, allCommits, heads, pageNo, repoOwner, repoName, commitDict, commitsContainer) {
+
+  let resizeObserver = new ResizeObserver(entries => drawGraph(commits, commitDict));
+  // Observe the commits container initially
+  resizeObserver.observe(commitsContainer);
+
   var newerButton = document.getElementById("newerButton");
   var olderButton = document.getElementById("olderButton");
   if (commits.length >= 10) {
     olderButton.setAttribute("aria-disabled", "false");
     olderButton.addEventListener("click", function () {
       // fetchFurther(commits, branchNames, allCommits, branches, heads, pageNo);
+      // Disconnect the observer before loading more commits
+      resizeObserver.disconnect();
       fetchFurther(commits.slice(-10), allCommits, heads, pageNo, branchNames, repoOwner, repoName);
+      // Once loading is complete, reconnect the observer
+      resizeObserver.observe(commitsContainer);
+
     });
   }
 }
